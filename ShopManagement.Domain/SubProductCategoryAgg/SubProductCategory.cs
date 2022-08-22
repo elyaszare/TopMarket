@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using _0_Framework;
+﻿using _0_Framework;
+using ShopManagement.Domain.ProductCategoryAgg;
 
-namespace ShopManagement.Domain.ProductCategoryAgg
+namespace ShopManagement.Domain.SubProductCategory
 {
-    public class ProductCategory : EntityBase
+    public class SubProductCategory : EntityBase
     {
         public string Name { get; private set; }
         public string Picture { get; private set; }
@@ -15,10 +15,12 @@ namespace ShopManagement.Domain.ProductCategoryAgg
         public string Keywords { get; private set; }
         public string MetaDescription { get; private set; }
         public string Slug { get; private set; }
-        public List<SubProductCategory.SubProductCategory> SubProductCategories { get; set; }
+        public long CategoryId { get; set; }
+        public ProductCategory ProductCategory { get; set; }
 
-        public ProductCategory(string name, string picture, string pictureAlt, string pictureTitle,
-            string shortDescription, string description, string keywords, string metaDescription, string slug)
+        public SubProductCategory(string name, string picture, string pictureAlt, string pictureTitle,
+            string shortDescription, string description, string keywords, string metaDescription, string slug,
+            long categoryId)
         {
             Name = name;
             Picture = picture;
@@ -30,10 +32,12 @@ namespace ShopManagement.Domain.ProductCategoryAgg
             Keywords = keywords;
             MetaDescription = metaDescription;
             Slug = slug;
+            CategoryId = categoryId;
         }
 
         public void Edit(string name, string picture, string pictureAlt, string pictureTitle,
-            string shortDescription, string description, string keywords, string metaDescription, string slug)
+            string shortDescription, string description, string keywords, string metaDescription, string slug,
+            long categoryId)
         {
             Name = name;
             if (picture != null) Picture = picture;
@@ -45,6 +49,7 @@ namespace ShopManagement.Domain.ProductCategoryAgg
             Keywords = keywords;
             MetaDescription = metaDescription;
             Slug = slug;
+            CategoryId = categoryId;
         }
 
         public void Remove()

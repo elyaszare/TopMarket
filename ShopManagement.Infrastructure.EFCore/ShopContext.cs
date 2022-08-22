@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopManagement.Domain.ProductCategoryAgg;
+using ShopManagement.Domain.SubProductCategory;
 using ShopManagement.Infrastructure.EFCore.Mapping;
 
 namespace ShopManagement.Infrastructure.EFCore
@@ -7,6 +8,7 @@ namespace ShopManagement.Infrastructure.EFCore
     public class ShopContext : DbContext
     {
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<SubProductCategory> SubProductCategories { get; set; }
 
         public ShopContext(DbContextOptions<ShopContext> options) : base(options)
         {

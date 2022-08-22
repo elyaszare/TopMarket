@@ -38,14 +38,20 @@ namespace ShopManagement.Application
         {
             var operation = new OperationResult();
             var productCategory = _productCategoryRepository.Get(command.Id);
+
             if (productCategory == null) return operation.Failed(ApplicationMessages.RecordNotFound);
+
             if (_productCategoryRepository.Exists(x => x.Name == command.Name && x.Id != command.Id))
                 return operation.Failed(ApplicationMessages.DuplicateRecord);
+
             var fileName = $"{command.Slug}";
             _fileUploader.Upload(command.Picture, fileName);
+
             var slug = command.Slug.Slugify();
+
             productCategory.Edit(command.Name, fileName, command.PictureAlt, command.PictureTitle,
                 command.ShortDescription, command.ShortDescription, command.Keywords, command.MetaDescription, slug);
+
             _productCategoryRepository.SaveChanges();
             return operation.Success();
         }

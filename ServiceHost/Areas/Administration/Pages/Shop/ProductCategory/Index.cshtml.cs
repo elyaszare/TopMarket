@@ -7,6 +7,7 @@ namespace ServiceHost.Areas.Administration.Pages.Shop.ProductCategory
 {
     public class IndexModel : PageModel
     {
+        [TempData] public string Message { get; set; }
         private readonly IProductCategoryApplication _productCategoryApplication;
         public List<ProductCategoryViewModel> ProductCategories;
         public ProductCategorySearchModel SearchModel { get; set; }
@@ -41,6 +42,24 @@ namespace ServiceHost.Areas.Administration.Pages.Shop.ProductCategory
         {
             var result = _productCategoryApplication.Edit(command);
             return new JsonResult(result);
+        }
+
+        public IActionResult OnGetRemove(long id)
+        {
+            var result = _productCategoryApplication.Remove(id);
+            if (result.IsSucceeded) return RedirectToPage("./Index");
+
+            Message = result.Message;
+            return RedirectToPage("./Index");
+        }
+
+        public IActionResult OnGetRestore(long id)
+        {
+            var result = _productCategoryApplication.Restore(id);
+            if (result.IsSucceeded) return RedirectToPage("./Index");
+
+            Message = result.Message;
+            return RedirectToPage("./Index");
         }
     }
 }
