@@ -24,8 +24,8 @@ namespace ShopManagement.Application
             if (_productCategoryRepository.Exists(x => x.Name == command.Name))
                 operation.Failed(ApplicationMessages.DuplicateRecord);
 
-            var fileName = $"{command.Slug}";
-            _fileUploader.Upload(command.Picture, fileName);
+            var filePath = $"{command.Slug}";
+            var fileName = _fileUploader.Upload(command.Picture, filePath);
             var slug = command.Slug.Slugify();
             var productCategory = new ProductCategory(command.Name, fileName, command.PictureAlt, command.PictureTitle,
                 command.ShortDescription, command.ShortDescription, command.Keywords, command.MetaDescription, slug);
@@ -44,8 +44,8 @@ namespace ShopManagement.Application
             if (_productCategoryRepository.Exists(x => x.Name == command.Name && x.Id != command.Id))
                 return operation.Failed(ApplicationMessages.DuplicateRecord);
 
-            var fileName = $"{command.Slug}";
-            _fileUploader.Upload(command.Picture, fileName);
+            var filePath = $"{command.Slug}";
+            var fileName = _fileUploader.Upload(command.Picture, filePath);
 
             var slug = command.Slug.Slugify();
 

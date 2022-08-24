@@ -1,4 +1,8 @@
-﻿@model ShopManagement.Application.Contracts.SubProductCategory.EditSubProductCategory
+﻿
+@model ShopManagement.Application.Contracts.Product.EditProduct
+@{
+}
+
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h4 class="modal-title">ویرایش محصول :@Model.Name</h4>
@@ -18,20 +22,21 @@
                     <input type="text" class="form-control" asp-for="Name">
                     <span asp-validation-for="Name" class="error"></span>
                 </div>
-            </div><div class="col-md-6">
                 <div class="form-group">
-                    <label asp-for="Slug" class="control-label">اسلاگ</label>
-                    <input type="text" class="form-control" asp-for="Slug" readonly="">
-                    <span asp-validation-for="Slug" class="error"></span>
+                    <label asp-for="Code" class="control-label">کد</label>
+                    <input type="text" class="form-control" asp-for="Code">
+                    <span asp-validation-for="Code" class="error"></span>
                 </div>
             </div>
+
         </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label asp-for="CategoryId" class="control-label">گروه</label>
+                    <label asp-for="CategoryId" class="control-label">گروه محصول</label>
                     <select class="form-control" asp-for="CategoryId" asp-items='new SelectList(Model.ProductCategories,"Id","Name")'>
-                        <option value="0">گروه</option>
+                        <option value="0">گروه محصول</option>
+
                     </select>
                     <span asp-validation-for="CategoryId" class="error"></span>
                 </div>
@@ -66,7 +71,7 @@
             <div class="col-md-12">
                 <div class="form-group no-margin">
                     <label asp-for="Description" class="control-label">توضیحات</label>
-                    <textarea class="form-control autogrow" asp-for="Description" onchange="fillField('Description', 'MetaDescription')"
+                    <textarea class="form-control autogrow" asp-for="Description"
                               style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
                     <span asp-validation-for="Description" class="error"></span>
                 </div>
@@ -74,19 +79,27 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="form-group">
+                <div class="form-group no-margin">
                     <label asp-for="ShortDescription" class="control-label">توضیحات کوتاه</label>
-                    <input type="text" class="form-control" asp-for="ShortDescription">
+                    <textarea class="form-control autogrow" asp-for="ShortDescription" onchange="fillField('ShortDescription', 'MetaDescription')"
+                              style="overflow: hidden; word-wrap: break-word; resize: horizontal; height: 104px;"></textarea>
                     <span asp-validation-for="ShortDescription" class="error"></span>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="form-group">
                     <label asp-for="Keywords" class="control-label">کلمات کلیدی</label>
                     <input type="text" class="form-control" asp-for="Keywords">
                     <span asp-validation-for="Keywords" class="error"></span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="Slug" class="control-label">اسلاگ</label>
+                    <input type="text" class="form-control" asp-for="Slug">
+                    <span asp-validation-for="Slug" class="error"></span>
                 </div>
             </div>
         </div>

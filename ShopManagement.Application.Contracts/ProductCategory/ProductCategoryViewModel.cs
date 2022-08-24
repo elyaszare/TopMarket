@@ -8,5 +8,6 @@
         public string ShortDescription { get; set; }
         public bool IsRemoved { get; set; }
         public string CreationDate { get; set; }
+        public string Slug { get; set; }
     }
 }

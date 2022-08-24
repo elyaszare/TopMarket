@@ -2,9 +2,10 @@
 using System.Linq;
 using _0_Framework.Application;
 using _0_Framework.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 using ShopManagement.Application.Contracts.ProductCategory;
 using ShopManagement.Application.Contracts.SubProductCategory;
-using ShopManagement.Domain.SubProductCategory;
+using ShopManagement.Domain.SubProductCategoryAgg;
 
 namespace ShopManagement.Infrastructure.EFCore.Repositories
 {
@@ -29,7 +30,8 @@ namespace ShopManagement.Infrastructure.EFCore.Repositories
                 ShortDescription = x.ShortDescription,
                 Keywords = x.Keywords,
                 MetaDescription = x.MetaDescription,
-                Slug = x.Slug
+                Slug = x.Slug,
+                CategoryId = x.CategoryId
             }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -55,22 +57,39 @@ namespace ShopManagement.Infrastructure.EFCore.Repositories
             }).OrderByDescending(x => x.Id).ToList();
         }
 
-        public List<SubProductCategoryViewModel> Search(SubProductCategorySearchModel searchModel)
+        public ProductCategoryViewModel GetSlugBy(long id)
         {
-            var query = _context.SubProductCategories.Select(x => new SubProductCategoryViewModel
+            return _context.ProductCategories.Select(x => new ProductCategoryViewModel
             {
                 Id = x.Id,
-                Name = x.Name,
-                Picture = x.Picture,
-                IsRemoved = x.IsRemoved,
-                CreationDate = x.CreationDate.ToFarsi(),
-                ShortDescription = x.ShortDescription
-            }).AsEnumerable();
+                Slug = x.Slug
+            }).FirstOrDefault(x => x.Id == id);
+        }
+
+        public SubProductCategory GetSubCategoryWithCategorySlugBy(long id)
+        {
+            return _context.SubProductCategories.Include(x => x.ProductCategory).FirstOrDefault(x => x.Id == id);
+        }
+
+        public List<SubProductCategoryViewModel> Search(SubProductCategorySearchModel searchModel)
+        {
+            var query = _context.SubProductCategories.Include(x => x.ProductCategory).Select(x =>
+                new SubProductCategoryViewModel
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Picture = x.Picture,
+                    IsRemoved = x.IsRemoved,
+                    CreationDate = x.CreationDate.ToFarsi(),
+                    ShortDescription = x.ShortDescription,
+                    CategoryName = x.ProductCategory.Name,
+                    CategoryId = x.CategoryId
+                }).AsEnumerable();
 
             if (!string.IsNullOrWhiteSpace(searchModel.Name))
                 query = query.Where(x => x.Name.Contains(searchModel.Name));
 
-            if (searchModel.CategoryId > 0)
+            if (searchModel.CategoryId != 0)
                 query = query.Where(x => x.CategoryId == searchModel.CategoryId);
 
             return query.OrderByDescending(x => x.Id).ToList();

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using ShopManagement.Domain.SubProductCategory;
+using ShopManagement.Domain.SubProductCategoryAgg;
 
 namespace ShopManagement.Infrastructure.EFCore.Mapping
 {
@@ -17,6 +17,11 @@ namespace ShopManagement.Infrastructure.EFCore.Mapping
             builder
                 .HasOne(x => x.ProductCategory)
                 .WithMany(x => x.SubProductCategories)
+                .HasForeignKey(x => x.CategoryId);
+
+            builder
+                .HasMany(x => x.Products)
+                .WithOne(x => x.SubCategory)
                 .HasForeignKey(x => x.CategoryId);
         }
     }

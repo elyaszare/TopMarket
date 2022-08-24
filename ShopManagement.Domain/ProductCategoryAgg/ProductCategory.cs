@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using _0_Framework;
+using ShopManagement.Domain.SubProductCategoryAgg;
 
 namespace ShopManagement.Domain.ProductCategoryAgg
 {
@@ -15,7 +16,7 @@ namespace ShopManagement.Domain.ProductCategoryAgg
         public string Keywords { get; private set; }
         public string MetaDescription { get; private set; }
         public string Slug { get; private set; }
-        public List<SubProductCategory.SubProductCategory> SubProductCategories { get; set; }
+        public List<SubProductCategory> SubProductCategories { get; set; }
 
         public ProductCategory(string name, string picture, string pictureAlt, string pictureTitle,
             string shortDescription, string description, string keywords, string metaDescription, string slug)

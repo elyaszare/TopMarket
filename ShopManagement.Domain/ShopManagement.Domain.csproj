@@ -9,8 +9,4 @@
     <ProjectReference Include="..\ShopManagement.Application.Contracts\ShopManagement.Application.Contracts.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ProductAgg\" />
-  </ItemGroup>
-
 </Project>

@@ -1,58 +1,62 @@
-﻿using System.Collections.Generic;
+﻿
 using _0_Framework;
-using ShopManagement.Domain.ProductAgg;
-using ShopManagement.Domain.ProductCategoryAgg;
+using ShopManagement.Domain.SubProductCategoryAgg;
 
-namespace ShopManagement.Domain.SubProductCategoryAgg
+namespace ShopManagement.Domain.ProductAgg
 {
-    public class SubProductCategory : EntityBase
+    public class Product : EntityBase
     {
         public string Name { get; private set; }
+        public string Code { get; private set; }
         public string Picture { get; private set; }
         public string PictureAlt { get; private set; }
         public string PictureTitle { get; private set; }
         public string ShortDescription { get; private set; }
         public string Description { get; private set; }
         public bool IsRemoved { get; private set; }
-        public string Keywords { get; private set; }
         public string MetaDescription { get; private set; }
+        public string Keywords { get; private set; }
         public string Slug { get; private set; }
-        public long CategoryId { get; set; }
-        public ProductCategory ProductCategory { get; set; }
-        public List<Product> Products { get; set; }
+        public long CategoryId { get; private set; }
+        public SubProductCategory SubCategory { get; set; }
 
-        public SubProductCategory(string name, string picture, string pictureAlt, string pictureTitle,
-            string shortDescription, string description, string keywords, string metaDescription, string slug,
+
+        public Product(string name, string code, string picture, string pictureAlt, string pictureTitle,
+            string shortDescription, string description, string metaDescription, string keywords, string slug,
             long categoryId)
         {
             Name = name;
+            Code = code;
             Picture = picture;
             PictureAlt = pictureAlt;
             PictureTitle = pictureTitle;
             ShortDescription = shortDescription;
             Description = description;
-            IsRemoved = false;
-            Keywords = keywords;
             MetaDescription = metaDescription;
+            Keywords = keywords;
             Slug = slug;
             CategoryId = categoryId;
+            IsRemoved = false;
         }
 
-        public void Edit(string name, string picture, string pictureAlt, string pictureTitle,
-            string shortDescription, string description, string keywords, string metaDescription, string slug,
+
+        public void Edit(string name, string code, string picture, string pictureAlt, string pictureTitle,
+            string shortDescription, string description, string metaDescription, string keywords, string slug,
             long categoryId)
         {
             Name = name;
-            if (picture != null) Picture = picture;
+            Code = code;
+            if (picture != null)
+                Picture = picture;
             PictureAlt = pictureAlt;
             PictureTitle = pictureTitle;
             ShortDescription = shortDescription;
             Description = description;
-            IsRemoved = false;
-            Keywords = keywords;
             MetaDescription = metaDescription;
+            Keywords = keywords;
             Slug = slug;
             CategoryId = categoryId;
+            IsRemoved = false;
         }
 
         public void Remove()
