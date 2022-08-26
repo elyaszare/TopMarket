@@ -9,7 +9,7 @@ namespace ShopManagement.Domain.ProductAgg
     {
         EditProduct GetDetails(long id);
         List<ProductViewModel> Search(ProductSearchModel searchModel);
-        string GetSlugBy(long id);
+        Product GetProductWithSlugBy(long id);
         List<SubProductCategoryViewModel> GetSubProductCategories();
         List<ProductViewModel> GetProducts();
     }

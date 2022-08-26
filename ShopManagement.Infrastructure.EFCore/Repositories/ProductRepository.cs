@@ -64,10 +64,12 @@ namespace ShopManagement.Infrastructure.EFCore.Repositories
             return query.OrderByDescending(x => x.Id).ToList();
         }
 
-        public string GetSlugBy(long id)
+        public Product GetProductWithSlugBy(long id)
         {
-            return _context.Products.Select(x => new {x.Id, x.Slug}).FirstOrDefault(x => x.Id == id)?.Slug;
+            return _context.Products.Include(x => x.SubCategory).ThenInclude(x => x.ProductCategory)
+                .FirstOrDefault(x => x.Id == id);
         }
+
 
         public List<SubProductCategoryViewModel> GetSubProductCategories()
         {

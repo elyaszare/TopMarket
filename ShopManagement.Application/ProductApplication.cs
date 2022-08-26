@@ -3,18 +3,22 @@ using _0_Framework.Application;
 using ShopManagement.Application.Contracts.Product;
 using ShopManagement.Application.Contracts.SubProductCategory;
 using ShopManagement.Domain.ProductAgg;
+using ShopManagement.Domain.SubProductCategoryAgg;
 
 namespace ShopManagement.Application
 {
     public class ProductApplication : IProductApplication
     {
+        private readonly ISubProductCategoryRepository _subProductCategoryRepository;
         private readonly IProductRepository _productRepository;
         private readonly IFileUploader _fileUploader;
 
-        public ProductApplication(IProductRepository productRepository, IFileUploader fileUploader)
+        public ProductApplication(IProductRepository productRepository, IFileUploader fileUploader,
+            ISubProductCategoryRepository subProductCategoryRepository)
         {
             _productRepository = productRepository;
             _fileUploader = fileUploader;
+            _subProductCategoryRepository = subProductCategoryRepository;
         }
 
         public OperationResult Create(CreateProduct command)
@@ -24,7 +28,12 @@ namespace ShopManagement.Application
             if (_productRepository.Exists(x => x.Name == command.Name))
                 return operation.Failed(ApplicationMessages.DuplicateRecord);
 
-            var filePath = $"{command.Slug}";
+            var getSlug = _subProductCategoryRepository.GetSlugBy(command.CategoryId);
+
+            if (getSlug == null)
+                return operation.Failed(ApplicationMessages.RecordNotFound);
+
+            var filePath = $"{getSlug.ProductCategory.Slug}/{getSlug.Slug}/{command.Slug}";
             var fileName = _fileUploader.Upload(command.Picture, filePath);
 
             var slug = command.Slug.Slugify();
@@ -41,14 +50,15 @@ namespace ShopManagement.Application
         public OperationResult Edit(EditProduct command)
         {
             var operation = new OperationResult();
-            var product = _productRepository.Get(command.Id);
+            var product = _productRepository.GetProductWithSlugBy(command.Id);
 
-            if (product == null) return operation.Failed(ApplicationMessages.RecordNotFound);
+            if (product == null)
+                return operation.Failed(ApplicationMessages.RecordNotFound);
 
             if (_productRepository.Exists(x => x.Name == command.Name && x.Id != command.Id))
                 return operation.Failed(ApplicationMessages.DuplicateRecord);
 
-            var filePath = $"{command.Slug}";
+            var filePath = $"{product.SubCategory.ProductCategory.Slug}/{product.SubCategory.Slug}/{command.Slug}";
             var fileName = _fileUploader.Upload(command.Picture, filePath);
 
             var slug = command.Slug.Slugify();

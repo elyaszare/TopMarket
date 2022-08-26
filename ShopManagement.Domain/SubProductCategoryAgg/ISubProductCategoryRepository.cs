@@ -10,7 +10,7 @@ namespace ShopManagement.Domain.SubProductCategoryAgg
         EditSubProductCategory GetDetails(long id);
         List<ProductCategoryViewModel> GetProductCategories();
         List<SubProductCategoryViewModel> GetSubProductCategories();
-        ProductCategoryViewModel GetSlugBy(long id);
+        SubProductCategory GetSlugBy(long id);
         SubProductCategory GetSubCategoryWithCategorySlugBy(long id);
         List<SubProductCategoryViewModel> Search(SubProductCategorySearchModel searchModel);
     }

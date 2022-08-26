@@ -31,7 +31,7 @@ namespace ShopManagement.Domain.SlideAgg
         {
             Title = title;
             Text = text;
-            if (picture != null)
+            if (!string.IsNullOrWhiteSpace(picture))
                 Picture = picture;
             PictureAlt = pictureAlt;
             PictureTitle = pictureTitle;

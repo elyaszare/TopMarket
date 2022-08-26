@@ -1,5 +1,7 @@
 ﻿
+using System.Collections.Generic;
 using _0_Framework;
+using ShopManagement.Domain.ProductPictureAgg;
 using ShopManagement.Domain.SubProductCategoryAgg;
 
 namespace ShopManagement.Domain.ProductAgg
@@ -19,7 +21,7 @@ namespace ShopManagement.Domain.ProductAgg
         public string Slug { get; private set; }
         public long CategoryId { get; private set; }
         public SubProductCategory SubCategory { get; set; }
-
+        public List<ProductPicture> ProductPictures { get; set; }
 
         public Product(string name, string code, string picture, string pictureAlt, string pictureTitle,
             string shortDescription, string description, string metaDescription, string keywords, string slug,
@@ -46,7 +48,7 @@ namespace ShopManagement.Domain.ProductAgg
         {
             Name = name;
             Code = code;
-            if (picture != null)
+            if (!string.IsNullOrWhiteSpace(picture))
                 Picture = picture;
             PictureAlt = pictureAlt;
             PictureTitle = pictureTitle;

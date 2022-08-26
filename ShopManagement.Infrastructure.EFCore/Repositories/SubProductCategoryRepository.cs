@@ -57,13 +57,9 @@ namespace ShopManagement.Infrastructure.EFCore.Repositories
             }).OrderByDescending(x => x.Id).ToList();
         }
 
-        public ProductCategoryViewModel GetSlugBy(long id)
+        public SubProductCategory GetSlugBy(long id)
         {
-            return _context.ProductCategories.Select(x => new ProductCategoryViewModel
-            {
-                Id = x.Id,
-                Slug = x.Slug
-            }).FirstOrDefault(x => x.Id == id);
+            return _context.SubProductCategories.Include(x => x.ProductCategory).FirstOrDefault(x => x.Id == id);
         }
 
         public SubProductCategory GetSubCategoryWithCategorySlugBy(long id)
