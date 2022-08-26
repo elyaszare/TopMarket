@@ -1,4 +1,5 @@
 using _0_Framework.Application;
+using BlogManagement.Infrastructure.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +24,8 @@ namespace ServiceHost
             var connectionString = Configuration.GetConnectionString("TopMarket_DB");
 
             ShopManagementBootstrapper.Configure(services,connectionString);
+            BlogManagementBootstrapper.Configure(services, connectionString);
+
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddTransient<IFileUploader, FileUploader>();
             services.AddRazorPages();
